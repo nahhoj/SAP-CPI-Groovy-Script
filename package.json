@@ -1,0 +1,110 @@
+{
+  "publisher": "myself",
+  "name": "sap-cpi-groovy-script",
+  "displayName": "SAP CPI Groovy Script",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.97.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:groovy"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "groovy",
+        "extensions": [
+          ".groovy"
+        ],
+        "aliases": [
+          "Groovy"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "sap-cpi-groovy-script.restartServer",
+        "title": "Restart Groovy language server",
+        "category": "SAP CPI"
+      },
+      {
+        "command": "sap-cpi-groovy-script.runSAPCPIGroovyScript",
+        "title": "Run SAP CPI Groovy Script",
+        "category": "SAP CPI"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "description": "Groovy configuration",
+      "properties": {
+        "groovy.java.home": {
+          "type": [
+            "string"
+          ],
+          "default": null,
+          "description": "Specifies the folder path to the JDK. Use this setting if the extension cannot find Java automatically."
+        },
+        "groovy.groovy.home": {
+          "type": [
+            "string"
+          ],
+          "default": null,
+          "description": "Specifies additional entries to add to the classpath. May contain both folders and individual .jar files.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "groovy.classpath": {
+          "type": "array",
+          "default": null,
+          "description": "Specifies additional entries to add to the classpath. May contain both folders and individual .jar files.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "groovy.keystore.path": {
+          "type": [
+            "string"
+          ],
+          "default": null,
+          "description": "Specifies where the keystore is (JKS).",
+          "items": {
+            "type": "string"
+          }
+        },
+        "groovy.keystore.password": {
+          "type": [
+            "string"
+          ],
+          "default": null,
+          "description": "Specifies where the keystore is (JKS).",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.97.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.19.0"
+  },
+  "dependencies": {
+    "@vscode/vsce": "^3.2.2",
+    "vscode-languageclient": "^9.0.1"
+  }
+}
