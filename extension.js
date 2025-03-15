@@ -99,12 +99,12 @@ async function runSAPCPIGroovyScript(){
 	//JSK Module
 	process.env.keystorePath = config.get("keystore.path");
 	process.env.keystorePassword = config.get("keystore.password");
-	console.log(process.env)
+	const sepatator=process.platform=="win32"?";":":";
 	const envVariables = {
 		...process.env,
-		Path: `${process.env.PATH};${path.join(homeJDK.java,"bin")};${path.join(homeJDK.groovy,"bin")}`
+		PATH: `${process.env.PATH}${sepatator}${path.join(homeJDK.java,"bin")}${sepatator}${path.join(homeJDK.groovy,"bin")}`
 	};
-	const command = `${process.platform=="win32"?"groovy":"./groovy"} -cp "${homeJDK.classPath.join(process.platform=="win32"?";":":")}" "${path.join(extensionsInfo.extensionPath,"resources","main.groovy")}"`;
+	const command = `groovy -cp "${homeJDK.classPath.join(sepatator)}" "${path.join(extensionsInfo.extensionPath,"resources","main.groovy")}"`;
 	exec((command),{ env: envVariables },(err,stdout,stderr)=>{
 		if (err){
 			outputChannel.appendLine(err.message);
