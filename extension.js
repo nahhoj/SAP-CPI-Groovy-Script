@@ -99,6 +99,7 @@ async function runSAPCPIGroovyScript(){
 	//JSK Module
 	process.env.keystorePath = config.get("keystore.path");
 	process.env.keystorePassword = config.get("keystore.password");
+	
 	const sepatator=process.platform=="win32"?";":":";
 	const envVariables = {
 		...process.env,
@@ -119,7 +120,7 @@ async function runSAPCPIGroovyScript(){
 function checkJavaInstalled(){	
 	let java=config.get("java.home",null);
 	let groovy=config.get("groovy.home",null);
-	let classPath=config.get("classpath",null)==null?[]:config.get("classpath",null);
+	let classPath=config.get("classpath",null)?config.get("classpath",null):[];
 	const localJars=`${path.join(extensionsInfo.extensionPath,"resources","libs")}`;
 	if (!classPath.find(it=>it==localJars)){
 		classPath.push(localJars);

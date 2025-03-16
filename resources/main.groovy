@@ -30,7 +30,6 @@ def converterFile2Array(textPlain,object,method){
     return object;
 }
 
-
 def String converterArray2File(array){
     def result="";
    array.each{it->
@@ -87,26 +86,26 @@ converterFile2Array(propertiesText,msg,"setProperty");
 msg.setBody(bodyText);
 script."$method"(msg);
 
-def responseFolder = groovy_script.replace(groovy_script.split("\\\\")[-1],"out");
+def responseFolder = groovy_script.replace(groovy_script.split("/\\\\")[-1],"out");
 
 def folder = new File(responseFolder)
 if (!folder.exists())
     folder.mkdirs()    
 
-def file = new File("$responseFolder\\result.body")
+def file = new File("$responseFolder/result.body")
 
 file.withWriter("UTF-8") { writer ->
     writer.write(msg.getBody());
 }
 
 
-file = new File("$responseFolder\\result.properties")
+file = new File("$responseFolder/result.properties")
 
 file.withWriter("UTF-8") { writer ->
     writer.write(converterArray2File(msg.getProperties()));
 }
 
-file = new File("$responseFolder\\result.header")
+file = new File("$responseFolder/result.header")
 
 file.withWriter("UTF-8") { writer ->
     writer.write(converterArray2File(msg.getHeaders()));
