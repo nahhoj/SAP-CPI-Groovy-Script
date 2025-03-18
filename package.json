@@ -1,20 +1,34 @@
 {
-  "publisher": "myself",
+  "publisher": "JohanCalderon",
   "name": "sap-cpi-groovy-script",
   "displayName": "SAP CPI Groovy Script",
-  "description": "",
-  "version": "0.0.1",
+  "description": "VSCode extension to execute SAP CPI Groovy script",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nahhoj/SAP-CPI-Groovy-Script.git"
+  },
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.97.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages"
   ],
   "activationEvents": [
     "onLanguage:groovy"
   ],
   "main": "./extension.js",
   "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "id": "sap-cpi-groovy-script",
+          "name": "SAP CPI Groovy Script",
+          "icon": "images/icon.png"
+        }
+      ]
+    },
     "languages": [
       {
         "id": "groovy",
@@ -47,14 +61,14 @@
             "string"
           ],
           "default": null,
-          "description": "Specifies the folder path to the JDK. Use this setting if the extension cannot find Java automatically."
+          "description": "Specifies the folder path to the JDK."
         },
         "groovy.groovy.home": {
           "type": [
             "string"
           ],
           "default": null,
-          "description": "Specifies additional entries to add to the classpath. May contain both folders and individual .jar files.",
+          "description": "Specifies the folder path to Groovy.",
           "items": {
             "type": "string"
           }
@@ -82,7 +96,7 @@
             "string"
           ],
           "default": null,
-          "description": "Specifies where the keystore is (JKS).",
+          "description": "Specifies the password of JSK",
           "items": {
             "type": "string"
           }

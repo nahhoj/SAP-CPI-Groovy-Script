@@ -8,6 +8,12 @@ import local.impl.LocalKeystoreService
 import com.sap.it.api.ITApiFactory
 import com.sap.it.api.keystore.KeystoreService
 
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+import javax.xml.parsers.DocumentBuilderFactory
+import org.xml.sax.InputSource
+import java.io.StringReader
+
 import com.sap.it.op.agent.mpl.factory.impl.MessageLogFactoryImpl
 import com.sap.it.api.msglog.MessageLogFactory
 
@@ -20,14 +26,44 @@ def converterFile2Array(textPlain,object,method){
         lines.each { line ->
             def parts = line.split('=')
             if (parts.length == 2) {
-                def value=parts[1].trim();
+                /*def value=fixData(parts[1].trim());
                 value=value.replaceAll('\\\\:', ':').replaceAll(',\\s*]', ']');
-                value=value.replaceAll('version\\=','version=');
+                value=value.replaceAll('version\\=','version=');*/
+                def value=fixData(parts[1].trim());                
                 object."$method"(parts[0].trim(),value)         
             }
         }
     }    
     return object;
+}
+
+def fixData(String input) {
+    input = input.trim()    
+    try {
+        input=input.replaceAll('\\\\"', '"')
+                          .replaceAll('\\\\:', ':')
+                          .replaceAll(',}', '}')
+                          .replaceAll(',\\]', ']')
+                          .trim();
+        def jsonSlurper = new JsonSlurper()
+        def parsedJson = jsonSlurper.parseText(input.replaceAll(/(\w+)\s*:/, '"$1":'))
+        return JsonOutput.prettyPrint(JsonOutput.toJson(parsedJson))
+    } catch (Exception e) {}
+    
+    try {
+        def factory = DocumentBuilderFactory.newInstance()
+        def builder = factory.newDocumentBuilder()
+        def xmlDoc = builder.parse(new InputSource(new StringReader(input)))
+        return groovy.xml.XmlUtil.serialize(xmlDoc)
+    } catch (Exception e) {}
+
+    try {
+        def lines = input.split("\n").collect { it.trim() }
+        def fixedCsv = lines.join("\n")
+        return fixedCsv
+    } catch (Exception e) {}
+
+    return input;
 }
 
 def String converterArray2File(array){
@@ -59,7 +95,7 @@ def sapcpi_headers=System.getenv('sapcpi_headers');
 def sapcpi_properties=System.getenv('sapcpi_properties');
 def sapcpi_body=System.getenv('sapcpi_body');
 def method = System.getenv('sapcpi_method');
-def bodyText;
+def bodyText="";
 if (sapcpi_body){
     def bodyFile = new File(sapcpi_body);
     bodyText=bodyFile.exists()?bodyFile.text:"";
@@ -86,29 +122,30 @@ converterFile2Array(propertiesText,msg,"setProperty");
 msg.setBody(bodyText);
 script."$method"(msg);
 
-def responseFolder = groovy_script.replace(groovy_script.split("/\\\\")[-1],"out");
+def responseFolder = groovy_script.replace(groovy_script.split("[/\\\\]")[-1], "out")
 
 def folder = new File(responseFolder)
 if (!folder.exists())
     folder.mkdirs()    
 
 def file = new File("$responseFolder/result.body")
-
+file.bytes = msg.getBody()
+/*
 file.withWriter("UTF-8") { writer ->
     writer.write(msg.getBody());
 }
-
-
-file = new File("$responseFolder/result.properties")
-
-file.withWriter("UTF-8") { writer ->
+*/
+file = new File("$responseFolder/result.properties");
+file.bytes =converterArray2File(msg.getProperties());
+/*file.withWriter("UTF-8") { writer ->
     writer.write(converterArray2File(msg.getProperties()));
 }
-
-file = new File("$responseFolder/result.header")
-
+*/
+file = new File("$responseFolder/result.header");
+file.bytes = converterArray2File(msg.getHeaders());
+/*
 file.withWriter("UTF-8") { writer ->
     writer.write(converterArray2File(msg.getHeaders()));
 }
-
+*/
 println ".......End"

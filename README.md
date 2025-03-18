@@ -1,12 +1,11 @@
 # sap-cpi-groovy-script README
 
-This extension allows you to run SAP CPI Groovy scripts in a local environment within Visual Studio Code. It provides a convenient way to test and debug your Groovy scripts before deploying them to SAP Cloud Integration.
+This extension allows you to run SAP CPI Groovy scripts in a local environment within Visual Studio Code. It provides a convenient way to test your Groovy scripts before deploying them to SAP Cloud Integration.
 
 ## Features
 
 - Execute SAP CPI Groovy scripts locally
 - Syntax highlighting and IntelliSense for Groovy scripts
-- Logging and debugging support
 - Seamless integration with Visual Studio Code
 
 ## Requirements
@@ -19,14 +18,12 @@ This extension allows you to run SAP CPI Groovy scripts in a local environment w
 
 This extension contributes the following settings:
 
-* `sapCpiGroovy.groovyPath`: Path to the Groovy installation.
-* `sapCpiGroovy.enableLogging`: Enable or disable logging for script execution.
-* `sapCpiGroovy.debugMode`: Enable debug mode for detailed output.
+* `groovy.java.home`: Path to the JDK folder (you don’t need to install it, just specify where the JDK is located).
+* `groovy.groovy.home`: Path to the Groovy folder.
+* `groovy.classpath`: Paths to external libraries (JAR files).
+* `groovy.keystore.path`: Path to the JKS file.
+* `groovy.keystore.password`: Password for the JKS file.
 
-## Known Issues
-
-- Some complex SAP CPI-specific libraries may not behave exactly as in the cloud environment.
-- Ensure correct Java and Groovy setup to avoid compatibility issues.
 
 ## Release Notes
 
@@ -38,6 +35,7 @@ This extension contributes the following settings:
 
 For more details, check out:
 
+* [Github repository](https://github.com/nahhoj/SAP-CPI-Groovy-Script.git)
 * [Visual Studio Code Extensions Guide](https://code.visualstudio.com/api/extension-guides/overview)
 * [Groovy Language Documentation](http://groovy-lang.org/documentation.html)
 

@@ -9,7 +9,7 @@ let languageClient;
 
 let homeJDK;
 
-const extensionsInfo=vscode.extensions.getExtension('myself.sap-cpi-groovy-script');
+const extensionsInfo=vscode.extensions.getExtension('JohanCalderon.sap-cpi-groovy-script');
 const config = vscode.workspace.getConfiguration("groovy");
 const outputChannel = vscode.window.createOutputChannel('SAP CPI Groovy Script');
 
@@ -144,7 +144,18 @@ function fileExists(filePath){
 	}
 }
 
-function deactivate() {}
+async function deactivate() {
+	if (languageClient){
+		try{	
+			await languageClient.stop();
+			vscode.window.showInformationMessage('SAP CPI Groovy Script is stopped!');			
+		}
+		catch(err){
+			vscode.window.showErrorMessage(err.message);
+		}
+		return;
+	}
+}
 
 module.exports = {
 	activate,
