@@ -14,7 +14,7 @@ This extension allows you to run SAP CPI Groovy scripts in a local environment w
 - Groovy installed and configured
 - Java (JDK 8 or later) installed and set up
 
-[![Custom Thumbnail](thumbnail.jpg)](https://github.com/nahhoj/SAP-CPI-Groovy-Script/blob/master/video/SAPCPIGroovtScript.mp4)
+[![Watch Demo](https://img.youtube.com/vi/08L74ywNQ_0/0.jpg)](https://www.youtube.com/watch?v=08L74ywNQ_0)
 
 ## Extension Settings
 
