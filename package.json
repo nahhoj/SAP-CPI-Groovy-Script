@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/nahhoj/SAP-CPI-Groovy-Script.git"
   },
-  "version": "1.0.2",
+  "version": "1.0.4",
   "engines": {
     "vscode": "^1.97.0"
   },
@@ -19,16 +19,8 @@
     "onLanguage:groovy"
   ],
   "main": "./extension.js",
-  "contributes": {
-    "views": {
-      "explorer": [
-        {
-          "id": "sap-cpi-groovy-script",
-          "name": "SAP CPI Groovy Script",
-          "icon": "images/icon.png"
-        }
-      ]
-    },
+  "icon": "images/icon.png",
+  "contributes": {    
     "languages": [
       {
         "id": "groovy",
@@ -97,6 +89,16 @@
           ],
           "default": null,
           "description": "Specifies the password of JSK",
+          "items": {
+            "type": "string"
+          }
+        },
+        "groovy.valuemapping.path": {
+          "type": [
+            "string"
+          ],
+          "default": null,
+          "description": "Specifies where the value mappings are",
           "items": {
             "type": "string"
           }

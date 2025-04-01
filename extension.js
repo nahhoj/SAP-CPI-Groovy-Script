@@ -99,6 +99,8 @@ async function runSAPCPIGroovyScript(){
 	//JSK Module
 	process.env.keystorePath = config.get("keystore.path");
 	process.env.keystorePassword = config.get("keystore.password");
+	//ValueMapping Module
+	process.env.valuemappingPath = config.get("valuemapping.path");
 	
 	const sepatator=process.platform=="win32"?";":":";
 	const envVariables = {

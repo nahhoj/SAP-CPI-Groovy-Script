@@ -25,6 +25,7 @@ This extension contributes the following settings:
 * `groovy.classpath`: Paths to external libraries (JAR files).
 * `groovy.keystore.path`: Path to the JKS file.
 * `groovy.keystore.password`: Password for the JKS file.
+* `groovy.valuemapping.path`: valuemapping objects in ZIP format.
 
 
 ## Release Notes
