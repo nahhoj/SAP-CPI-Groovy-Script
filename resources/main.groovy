@@ -5,11 +5,12 @@ import org.apache.camel.Exchange
 import org.apache.camel.impl.DefaultCamelContext
 import org.apache.camel.builder.ExchangeBuilder
 import local.impl.LocalKeystoreService
-import local.impl.LocalValueMappingApiService 
+import local.impl.LocalValueMappingApi
 
 import com.sap.it.api.ITApiFactory
 import com.sap.it.api.keystore.KeystoreService
-import com.sap.xi.mapping.camel.valmap.ValueMappingApiService
+import com.sap.it.api.mapping.ValueMappingApi
+
 
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
@@ -37,7 +38,9 @@ def converterFile2Array(textPlain,object,method){
                 object."$method"(parts[0].trim(),value);                
             }
         }
-    }    
+    }
+    else
+        object."$method"("SAP_MessageProcessingLogID","AGfs3PFa2E-xE6tOnNkPzK4t9FL5");
     return object;
 }
 
@@ -54,8 +57,8 @@ def initLocalModules(){
         if (apiClass == KeystoreService.class) {
             return new LocalKeystoreService()
         }
-        else if (apiClass == ValueMappingApiService.class)
-            return new LocalValueMappingApiService()
+        else if (apiClass == ValueMappingApi.class)
+            return new LocalValueMappingApi()
         throw new RuntimeException("Invalid API request: " + apiClass)
     }
 }

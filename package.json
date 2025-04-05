@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/nahhoj/SAP-CPI-Groovy-Script.git"
   },
-  "version": "1.0.4",
+  "version": "1.0.6",
   "engines": {
     "vscode": "^1.97.0"
   },
