@@ -28,15 +28,15 @@ def messageLogFactory=new MessageLogFactoryImpl();
 
 def converterFile2Array(textPlain,object,method){
     if (textPlain){
-        def lines = textPlain.split('\n').findAll{!it.startsWith('#')}
+        def lines = textPlain.split('\n').findAll{!it.startsWith('#')}        
         def headerMap = [:]    
         lines.each { line ->
-            def parts = line.split('=')
-            if (parts.length == 2) {
-                //def value=fixData(parts[1].trim());                
-                def value=parts[1].trim();             
-                object."$method"(parts[0].trim(),value);                
-            }
+            line=line.replace("\\n","\n").replace("\\r","\r").replace("\\=","=").replace("\\:",":");
+            def firstEqual=line.indexOf("=")
+            def name=line.substring(0,firstEqual);
+            def value=line.substring(firstEqual+1,line.length());
+            if (value.length()>0) 
+                object."$method"(name.trim(),value);            
         }
     }
     else
@@ -90,6 +90,7 @@ if (sapcpi_properties){
     def propertiesFile = new File(sapcpi_properties);
     propertiesText=propertiesFile.exists()?propertiesFile.text:"";
 }
+
 try{
     def script = shell.parse(new File(groovy_script));
     CamelContext context = new DefaultCamelContext();                    
